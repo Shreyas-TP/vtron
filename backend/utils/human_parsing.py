@@ -33,3 +33,13 @@ def torso_mask(image_path: str, bbox: Tuple[int, int, int, int]) -> np.ndarray:
     x1 = max(0, x1); y1 = max(0, y1); x2 = min(w - 1, x2); y2 = min(h - 1, y2)
     mask[y1:y2+1, x1:x2+1] = 1
     return mask
+
+
+def clothing_mask(image_path: str, bbox: Tuple[int, int, int, int]) -> np.ndarray:
+    img = cv2.imread(image_path)
+    h, w = img.shape[:2]
+    mask = np.zeros((h, w), dtype=np.uint8)
+    x1, y1, x2, y2 = bbox
+    x1 = max(0, x1); y1 = max(0, y1); x2 = min(w - 1, x2); y2 = min(h - 1, y2)
+    mask[y1:y2+1, x1:x2+1] = 1
+    return mask

@@ -49,7 +49,7 @@ def tensor_from_image(img: Image.Image) -> torch.Tensor:
     return t
 
 
-def run_conditional_diffusion(person_img: Image.Image, cloth_img: Image.Image, mask_img: Image.Image, steps: int = 1) -> Image.Image:
+def run_conditional_diffusion(person_img: Image.Image, cloth_img: Image.Image, mask_img: Image.Image, steps: int = 3) -> Image.Image:
     load_diffusion_model()
     p = tensor_from_image(person_img.resize((512, 512)))  # [1,3,H,W]
     c = tensor_from_image(cloth_img.resize((512, 512)))   # [1,3,H,W]
@@ -58,6 +58,17 @@ def run_conditional_diffusion(person_img: Image.Image, cloth_img: Image.Image, m
     cm = c * m  # mask cloth to preserve 3 channels
     x_in = torch.cat([p, cm], dim=1)  # [1,6,H,W]
     assert x_in.shape[1] == 6, f"Diffusion input channels expected 6, got {x_in.shape[1]}"
-    y = _net(x_in)
-    out = (y.squeeze(0).permute(1, 2, 0).detach().numpy() * 255.0).astype(np.uint8)
+    x = x_in.clone()
+    for _ in range(steps):
+        y = _net(x)  # [1,3,H,W] refined cloth
+        weight3 = (m.repeat(1,3,1,1) * 0.5 + 0.5)
+        base = x[:, 0:3]
+        cloth = x[:, 3:6]
+        cloth = (cloth * (1 - 0.3*weight3) + y * (0.3*weight3)).clamp(0,1)
+        x = torch.cat([base, cloth], dim=1)
+    base = x[:,0:3]
+    cloth = x[:,3:6]
+    m3 = m.repeat(1,3,1,1)
+    comp = (base*(1-m3) + cloth*m3).clamp(0,1)
+    out = (comp.squeeze(0).permute(1, 2, 0).detach().numpy() * 255.0).astype(np.uint8)
     return Image.fromarray(out)
