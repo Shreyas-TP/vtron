@@ -1,0 +1,13 @@
+body{font-family:system-ui,Segoe UI,Arial,sans-serif;margin:0;background:#f7f7f7;color:#222}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.panel{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px;margin:16px 0}
+.row{display:flex;gap:16px}
+.col{flex:1}
+button{padding:10px 16px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer}
+button:hover{background:#1e40af}
+img{max-width:100%;border-radius:6px;border:1px solid #ddd;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.compare{display:flex;gap:16px}
+.recs{display:flex;gap:16px}
+#status{padding:8px;color:#444}
+

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Try-On</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <nav class="bg-white border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <h1 class="text-xl font-semibold">Virtual Try-On</h1>
+      <div class="space-x-4">
+        <a href="#" class="text-sm text-gray-600">Docs</a>
+        <a href="#" class="text-sm text-gray-600">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 space-y-6">
+        <div class="bg-white rounded-lg shadow p-4">
+          <h2 class="text-lg font-medium mb-4">Upload</h2>
+          <form id="tryon-form" class="space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="border rounded-lg p-4">
+                <label class="block text-sm font-medium mb-2">Person Image</label>
+                <input type="file" id="person" accept="image/png,image/jpeg" class="w-full" required />
+              </div>
+              <div class="border rounded-lg p-4">
+                <label class="block text-sm font-medium mb-2">Cloth Image</label>
+                <input type="file" id="cloth" accept="image/png,image/jpeg" class="w-full" required />
+              </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm mb-2">Garment Type</label>
+                <select id="garment" class="w-full border rounded px-3 py-2">
+                  <option>Upper body</option>
+                  <option>Full dress</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm mb-2">Background</label>
+                <select id="background" class="w-full border rounded px-3 py-2">
+                  <option>Keep</option>
+                  <option>Blur</option>
+                  <option>Plain</option>
+                </select>
+              </div>
+              <div class="flex items-end">
+                <button type="submit" class="w-full bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">Generate Try-On</button>
+              </div>
+            </div>
+          </form>
+          <div id="status" class="text-sm text-gray-600 mt-2"></div>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-4">
+          <div class="bg-white rounded-lg shadow p-3">
+            <h3 class="text-sm font-medium mb-2">Original Person</h3>
+            <img id="person-img" class="rounded border" />
+          </div>
+          <div class="bg-white rounded-lg shadow p-3">
+            <h3 class="text-sm font-medium mb-2">Original Cloth</h3>
+            <img id="cloth-img" class="rounded border" />
+          </div>
+          <div class="bg-white rounded-lg shadow p-3">
+            <h3 class="text-sm font-medium mb-2">Model A Result</h3>
+            <img id="result-a" class="rounded border" />
+            <button id="download-a" class="mt-2 w-full bg-gray-800 text-white rounded px-3 py-2">Download A</button>
+          </div>
+          <div class="bg-white rounded-lg shadow p-3">
+            <h3 class="text-sm font-medium mb-2">Model B Result</h3>
+            <img id="result-b" class="rounded border" />
+            <button id="download-b" class="mt-2 w-full bg-gray-800 text-white rounded px-3 py-2">Download B</button>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-4">
+          <h2 class="text-lg font-medium mb-4">Comparison</h2>
+          <img id="compare" class="rounded border w-full" />
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-4 space-y-4">
+          <h2 class="text-lg font-medium">Ratings</h2>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-sm mb-2">Realism</label>
+              <div id="realism-stars" class="flex space-x-1"></div>
+            </div>
+            <div>
+              <label class="block text-sm mb-2">Fit Accuracy</label>
+              <div id="fit-stars" class="flex space-x-1"></div>
+            </div>
+            <div>
+              <label class="block text-sm mb-2">Preferred Model</label>
+              <select id="preferred" class="w-full border rounded px-3 py-2">
+                <option>A</option>
+                <option>B</option>
+                <option>Both</option>
+                <option>None</option>
+              </select>
+            </div>
+          </div>
+          <button id="submit-feedback" class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">Submit Feedback</button>
+          <div id="summary" class="text-sm text-gray-600"></div>
+        </div>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="bg-white rounded-lg shadow p-4">
+          <h2 class="text-lg font-medium mb-3">Similar Dresses You May Like</h2>
+          <div id="recs" class="grid grid-cols-3 gap-2"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="border-t bg-white mt-8">
+    <div class="max-w-7xl mx-auto px-4 py-3 text-sm text-gray-600">© Virtual Try-On Demo</div>
+  </footer>
+
+  <script src="/frontend/script.js"></script>
+</body>
+</html>
