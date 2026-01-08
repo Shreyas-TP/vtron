@@ -32,10 +32,10 @@ def run_model_b(person_path: str, cloth_path: str, garment_type: Literal["Upper 
     out_img = run_conditional_diffusion(Image.fromarray(person_clean), Image.fromarray(warped_ct), Image.fromarray((wmask_f*255).astype(np.uint8)), steps=3)
     out_path = os.path.join(out_dir, f"{base_name}.png")
     # Debug writes
-    Image.fromarray(cv2.resize(person_np, (512, 512))).save(os.path.join(out_dir, f"{ts}_person.png"))
-    Image.fromarray(cv2.resize(cloth_np, (512, 512))).save(os.path.join(out_dir, f"{ts}_cloth.png"))
-    Image.fromarray(cv2.resize(warped_ct, (512, 512))).save(os.path.join(out_dir, f"{ts}_warped_cloth.png"))
-    Image.fromarray((cv2.resize((wmask*255).astype(np.uint8), (512, 512)))).save(os.path.join(out_dir, f"{ts}_warped_mask.png"))
+    Image.fromarray(person_np).resize((512, 512)).save(os.path.join(out_dir, f"{ts}_person.png"))
+    Image.fromarray(cloth_np).resize((512, 512)).save(os.path.join(out_dir, f"{ts}_cloth.png"))
+    Image.fromarray(warped_ct).resize((512, 512)).save(os.path.join(out_dir, f"{ts}_warped_cloth.png"))
+    Image.fromarray((wmask*255).astype(np.uint8)).resize((512, 512)).save(os.path.join(out_dir, f"{ts}_warped_mask.png"))
     out_img.resize((512, 512)).save(os.path.join(out_dir, f"{ts}_model_b.png"))
     # Comparison if A exists
     try:
